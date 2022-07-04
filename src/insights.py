@@ -104,7 +104,7 @@ def get_max_salary(path):
     list = jobs.read(path)
     max_salaries = []
     for job in list:
-        if len(job['max_salary']) > 0:
+        if len(job['max_salary']) > 0 and job['max_salary'] != 'invalid':
             max_salaries.append(int(job['max_salary']))
 
     return max(max_salaries)
@@ -128,7 +128,7 @@ def get_min_salary(path):
     list = jobs.read(path)
     min_salaries = []
     for job in list:
-        if len(job['min_salary']) > 0:
+        if len(job['min_salary']) > 0 and job['min_salary'] != 'invalid':
             min_salaries.append(int(job['min_salary']))
 
     return min(min_salaries)
