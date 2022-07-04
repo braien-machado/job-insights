@@ -19,8 +19,8 @@ def get_unique_job_types(path):
     list = jobs.read(path)
     job_types = []
     for job in list:
-        if job['job_type'] not in job_types:
-            job_types.append(job['job_type'])
+        if job["job_type"] not in job_types:
+            job_types.append(job["job_type"])
 
     return job_types
 
@@ -40,9 +40,8 @@ def filter_by_job_type(jobs, job_type):
     list
         List of jobs with provided job_type
     """
-    list = [job for job in jobs if job['job_type'] == job_type]
 
-    return list
+    return [job for job in jobs if job["job_type"] == job_type]
 
 
 def get_unique_industries(path):
@@ -63,8 +62,8 @@ def get_unique_industries(path):
     list = jobs.read(path)
     industries = []
     for job in list:
-        if len(job['industry']) > 0 and job['industry'] not in industries:
-            industries.append(job['industry'])
+        if len(job["industry"]) > 0 and job["industry"] not in industries:
+            industries.append(job["industry"])
 
     return industries
 
@@ -85,7 +84,7 @@ def filter_by_industry(jobs, industry):
         List of jobs with provided industry
     """
 
-    list = [job for job in jobs if job['industry'] == industry]
+    list = [job for job in jobs if job["industry"] == industry]
 
     return list
 
@@ -109,8 +108,8 @@ def get_max_salary(path):
     list = jobs.read(path)
     max_salaries = []
     for job in list:
-        if len(job['max_salary']) > 0 and job['max_salary'] != 'invalid':
-            max_salaries.append(int(job['max_salary']))
+        if len(job["max_salary"]) > 0 and job["max_salary"] != "invalid":
+            max_salaries.append(int(job["max_salary"]))
 
     return max(max_salaries)
 
@@ -133,8 +132,8 @@ def get_min_salary(path):
     list = jobs.read(path)
     min_salaries = []
     for job in list:
-        if len(job['min_salary']) > 0 and job['min_salary'] != 'invalid':
-            min_salaries.append(int(job['min_salary']))
+        if len(job["min_salary"]) > 0 and job["min_salary"] != "invalid":
+            min_salaries.append(int(job["min_salary"]))
 
     return min(min_salaries)
 
@@ -164,15 +163,15 @@ def matches_salary_range(job, salary):
     """
 
     if type(salary) != int:
-        raise ValueError('salary must be a number')
-    if 'min_salary' not in job or 'max_salary' not in job:
-        raise ValueError('min_salary or max_salary is not in dict')
-    if type(job['min_salary']) != int or type(job['max_salary']) != int:
-        raise ValueError('min_salary and max_salary must be numbers')
-    if int(job['min_salary']) > int(job['max_salary']):
-        raise ValueError('min_salary must be smaller than max_salary')
+        raise ValueError("salary must be a number")
+    if "min_salary" not in job or "max_salary" not in job:
+        raise ValueError("min_salary or max_salary is not in dict")
+    if type(job["min_salary"]) != int or type(job["max_salary"]) != int:
+        raise ValueError("min_salary and max_salary must be numbers")
+    if int(job["min_salary"]) > int(job["max_salary"]):
+        raise ValueError("min_salary must be smaller than max_salary")
 
-    return job['min_salary'] <= salary <= job['max_salary']
+    return job["min_salary"] <= salary <= job["max_salary"]
 
 
 def filter_by_salary_range(jobs, salary):
@@ -190,4 +189,12 @@ def filter_by_salary_range(jobs, salary):
     list
         Jobs whose salary range contains `salary`
     """
-    return []
+    list = []
+    for job in jobs:
+        try:
+            if matches_salary_range(job, salary):
+                list.append(job)
+        except ValueError:
+            pass
+
+    return list
