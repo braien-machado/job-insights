@@ -1,4 +1,4 @@
-from jobs import read
+from . import jobs
 
 
 def get_unique_job_types(path):
@@ -16,7 +16,7 @@ def get_unique_job_types(path):
     list
         List of unique job types
     """
-    list = read(path)
+    list = jobs.read(path)
     job_types = []
     for job in list:
         if job['job_type'] not in job_types:
@@ -58,7 +58,7 @@ def get_unique_industries(path):
     list
         List of unique industries
     """
-    list = read(path)
+    list = jobs.read(path)
     industries = []
     for job in list:
         if len(job['industry']) > 0 and job['industry'] not in industries:
@@ -101,7 +101,7 @@ def get_max_salary(path):
         The maximum salary paid out of all job opportunities
     """
 
-    list = read(path)
+    list = jobs.read(path)
     max_salaries = []
     for job in list:
         if len(job['max_salary']) > 0:
@@ -125,7 +125,7 @@ def get_min_salary(path):
     int
         The minimum salary paid out of all job opportunities
     """
-    list = read(path)
+    list = jobs.read(path)
     min_salaries = []
     for job in list:
         if len(job['min_salary']) > 0:
