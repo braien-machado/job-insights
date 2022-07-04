@@ -128,7 +128,7 @@ def get_min_salary(path):
     list = read(path)
     min_salaries = []
     for job in list:
-        if len(job['max_salary']) > 0:
+        if len(job['min_salary']) > 0:
             min_salaries.append(int(job['min_salary']))
 
     return min(min_salaries)
